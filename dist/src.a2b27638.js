@@ -189,7 +189,7 @@ function getdata() {
 }
 function _getdata() {
   _getdata = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var url, dataPromise, dataJSON, municipalities, id, values;
+    var url, dataPromise, dataJSON, municipalities, id, values, rates, erate;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -208,7 +208,9 @@ function _getdata() {
             var obj = {
               city: mun,
               value: 0,
-              theId: id
+              theId: id,
+              rate: 0,
+              erate: 0
             };
             dataArr.push(obj);
             id++;
@@ -219,23 +221,52 @@ function _getdata() {
             dataArr[id].value = val;
             id++;
           });
-          console.log(dataArr);
+          url = "https://statfin.stat.fi/PxWeb/sq/5e288b40-f8c8-4f1e-b3b0-61b86ce5c065";
+          _context.next = 16;
+          return fetch(url);
+        case 16:
+          dataPromise = _context.sent;
+          _context.next = 19;
+          return dataPromise.json();
+        case 19:
+          dataJSON = _context.sent;
+          rates = Object.values(dataJSON.dataset.value);
+          id = 0;
+          erate = 0;
+          rates.forEach(function (r) {
+            dataArr[id].rate = r;
+            erate = r / dataArr[id].value * 100;
+            erate = erate.toFixed(2);
+            dataArr[id].erate = erate;
+            id++;
+          });
           id = 1;
           dataArr.forEach(function (obj) {
             var tr = document.createElement("tr");
             var td1 = document.createElement("td");
             var td2 = document.createElement("td");
+            var td3 = document.createElement("td");
+            var td4 = document.createElement("td");
             td1.innerText = obj.city;
             td2.innerText = obj.value;
+            td3.innerText = obj.rate;
+            td4.innerText = obj.erate;
             tr.appendChild(td1);
             tr.appendChild(td2);
+            tr.appendChild(td3);
             if (id % 2 == 0) {
               tr.setAttribute("class", "even");
+            }
+            tr.appendChild(td4);
+            if (obj.erate > 45) {
+              tr.setAttribute("class", "green");
+            } else if (obj.erate < 25) {
+              tr.setAttribute("class", "red");
             }
             tblBody.appendChild(tr);
             id++;
           });
-        case 16:
+        case 26:
         case "end":
           return _context.stop();
       }
