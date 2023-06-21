@@ -1,5 +1,5 @@
 body {
-  font-family: Verdana, Arial, sans-serif
+  font-family: Verdana, Arial, sans-serif;
 }
 
 td {
@@ -30,4 +30,12 @@ table {
 
 .center h1 {
   text-align: center;
+}
+
+tr {
+  background-color: #ffffff;
+}
+
+.even {
+  background-color: #f2f2f2;
 }

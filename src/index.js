@@ -27,7 +27,8 @@ async function getdata() {
   })
 
   console.log(dataArr)
-
+  
+  id = 1
   dataArr.forEach((obj) => {
     let tr = document.createElement("tr")
     let td1 = document.createElement("td")
@@ -36,7 +37,11 @@ async function getdata() {
     td2.innerText = obj.value
     tr.appendChild(td1)
     tr.appendChild(td2)
+    if (id%2 == 0) {
+      tr.setAttribute("class", "even")
+    }
     tblBody.appendChild(tr)
+    id++
   })
 
 

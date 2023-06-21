@@ -220,6 +220,7 @@ function _getdata() {
             id++;
           });
           console.log(dataArr);
+          id = 1;
           dataArr.forEach(function (obj) {
             var tr = document.createElement("tr");
             var td1 = document.createElement("td");
@@ -228,9 +229,13 @@ function _getdata() {
             td2.innerText = obj.value;
             tr.appendChild(td1);
             tr.appendChild(td2);
+            if (id % 2 == 0) {
+              tr.setAttribute("class", "even");
+            }
             tblBody.appendChild(tr);
+            id++;
           });
-        case 15:
+        case 16:
         case "end":
           return _context.stop();
       }
